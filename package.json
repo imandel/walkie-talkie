@@ -1,0 +1,51 @@
+{
+  "name": "scrollydrive-sd",
+  "version": "1.0.0",
+  "description": "This template is an extension of the Mapbox \"scrollytelling\" template and is meant for data journalists and digital storytellers of any kind.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build index.html",
+    "dev": "parcel index.html",
+    "doc": "node ./fetch-doc.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@tmcw/togeojson": "^4.3.0",
+    "archieml": "^0.4.2",
+    "cssnano": "^4.1.10",
+    "eslint": "^7.20.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.22.1",
+    "fluent-ffmpeg": "^2.1.2",
+    "parcel-plugin-static-files-copy": "^2.4.3",
+    "xmldom": "^0.4.0"
+  },
+  "dependencies": {
+    "@turf/turf": "^5.1.6",
+    "body-scroll-lock": "^3.1.5",
+    "flipbook": "github:imandel/flipbook.js",
+    "intersection-observer": "^0.11.0",
+    "jquery": "^3.5.1",
+    "mapbox-gl": "^2.1.1",
+    "micromodal": "^0.4.6",
+    "nouislider": "^14.6.1",
+    "request": "^2.88.2",
+    "scrollama": "^2.2.1",
+    "turf": "^3.0.14",
+    "wnumb": "^1.2.0"
+  },
+  "browserslist": {
+    "production": [
+      "last 3 chrome versions",
+      "last 3 firefox versions",
+      "last 3 safari versions"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
