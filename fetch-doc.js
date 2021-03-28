@@ -4,9 +4,9 @@ const archieml = require('archieml');
 const request = require('request');
 
 const CWD = process.cwd();
-const CONFIG_PATH = `${CWD}/doc.json`;
-const CONFIG = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf-8'));
-const { doc } = CONFIG.google;
+const DOC_CONFIG_PATH = `${CWD}/doc.json`;
+const DOC_CONFIG = JSON.parse(fs.readFileSync(DOC_CONFIG_PATH, 'utf-8'));
+const { doc } = DOC_CONFIG.google;
 
 const makeRequest = (opt, cb) => {
   const url = `https://docs.google.com/document/d/${opt.id}/export?format=txt`;

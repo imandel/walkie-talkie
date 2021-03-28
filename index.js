@@ -1,19 +1,17 @@
 import scrollama from 'scrollama';
 import mapboxgl from 'mapbox-gl';
 import turf from 'turf';
-// import { disableBodyScroll, enableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
-// import { config } from './config';
-// eslint-disable-next-line import/extensions
 import { chapters, config } from './copy.json';
 import routeData from './route.json';
 
 let viewerImg = document.getElementById('viewerImg');
 let vid = document.getElementById('vid');
-vid.src = './GMT20201216-141014_Interview-_640x360.mp4';
+vid.src = './resized_IMG_4965.mp4';
 console.log(vid);
 vid.onplaying = () => { vid.style.opacity = 100 };
 vid.onpause = () => { vid.style.opacity = 0 };
 vid.parentNode.onclick = () => vid.paused ? vid.play() : vid.pause()
+const im_path = './imgs/'
 
 const totalVideoDuration = chapters.reduce((accumulator, chapter) => {
   if (chapter.video) {
@@ -44,14 +42,17 @@ const geojsonPoint = {
 };
 
 const routelen = routeData.features[0].geometry.coordinates.length;
-const imgs = routeData.features[0].properties.coordTimes.filter(img => img > 86);
+const imgs = routeData.features[0].properties.coordTimes.filter(img => img > 0);
 
+console.log(routelen)
+
+//pre-load first 20 images
 window.onload = () => {
 imgs.slice(0, 20).forEach((img) =>{
     console.log('loading: ' )
     const tempImg = new Image();
-    tempImg.src = `./imgs/${img}.png`
-    tempImg.onload = () => console.log('loaded: ', `./imgs/${img}.png`);
+    tempImg.src = `${im_path}${img}.png`
+    tempImg.onload = () => console.log('loaded: ', `${im_path}${img}.png`);
   });
 }
 
@@ -64,19 +65,17 @@ const createLine = () => {
 
 console.log(routeData.features[0].properties.coordTimes[309]);
 
-
-
 const changeCenter = (index) => {
   // Set center to a subsample of the line, say every 10th or 25th
   const currentJson = geojsonPoint.features[0].geometry.coordinates.slice(0, index);
   // console.log(imgs[index])
-  viewerImg.src = `./imgs/${imgs[index]}.png`;
+  viewerImg.src = `${im_path}${imgs[index]}.png`;
   vid.currentTime = imgs[index];
   imgs.slice(index+1, index+10).forEach((img) =>{
     console.log('loading: ', img)
     const tempImg = new Image();
-    tempImg.src = `./imgs/${img}.png`
-    tempImg.onload = () => console.log('loaded: ', `./imgs/${img}.png`);
+    tempImg.src = `${im_path}${img}.png`
+    tempImg.onload = () => console.log('loaded: ', `${im_path}${img}.png`);
   });
   // vid.oncanplay = () => { vid.currentTime = imgs[index]}
   console.log(vid.currentTime);
