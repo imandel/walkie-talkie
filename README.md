@@ -31,5 +31,8 @@ uses parcel bundler
 * After video and GPs data are ready, run `node make-clips.js`
 * This will create `routes.json` for the walking point/line and image clips in the `imgs` folder for the flipbook
 
-5. Run project
+5. Update path names in `index.js`
+* Make sure that the copy path (ex. `copy.json`) and video name (ex. `IMG_1234.mp4`) match your data
+
+6. Run project `npm run dev`
 
