@@ -35,6 +35,7 @@ https://parceljs.org/getting_started.html
 * Make sure image file path is correct
 
 3. Prepare GPS Route Content
+* Make GPX file using Open GPX Tracker ([Apple](https://apps.apple.com/app/open-gpx-tracker/id984503772), [Android](https://play.google.com/store/apps/details?id=net.osmtracker))
 * Add GPX file to `data/` folder
 
 4. Create Image Flipbook Content and Routes JSON
