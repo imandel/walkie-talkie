@@ -6,9 +6,9 @@ const { URL } = require('url');
 
 // set data paths
 const CWD = process.cwd();
-const DOC_CONFIG_PATH = `${CWD}/doc.json`;
-const DOC_CONFIG = JSON.parse(fs.readFileSync(DOC_CONFIG_PATH, 'utf-8'));
-const copy_path = `${CWD}/${DOC_CONFIG.google.doc[0].filepath}`
+const CONFIG_PATH = `${CWD}/doc.json`;
+const CONFIG = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf-8'));
+const copy_path = `${CWD}/${CONFIG.google.doc[0].filepath}`
 const directory = './data/';
 const out = './static/';
 
