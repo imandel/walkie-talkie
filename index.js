@@ -44,15 +44,13 @@ const geojsonPoint = {
 const routelen = routeData.features[0].geometry.coordinates.length;
 const imgs = routeData.features[0].properties.coordTimes.filter(img => img > 0);
 
-console.log(routelen)
+console.log("Route Length", routelen)
 
 //pre-load first 20 images
 window.onload = () => {
 imgs.slice(0, 20).forEach((img) =>{
-    console.log('loading: ' )
     const tempImg = new Image();
     tempImg.src = `${im_path}${img}.png`
-    tempImg.onload = () => console.log('loaded: ', `${im_path}${img}.png`);
   });
 }
 
@@ -63,8 +61,6 @@ const createLine = () => {
   map.getSource('lineSource').setData(geojsonPoint);
 };
 
-console.log(routeData.features[0].properties.coordTimes[309]);
-
 const changeCenter = (index) => {
   // Set center to a subsample of the line, say every 10th or 25th
   const currentJson = geojsonPoint.features[0].geometry.coordinates.slice(0, index);
@@ -72,13 +68,11 @@ const changeCenter = (index) => {
   viewerImg.src = `${im_path}${imgs[index]}.png`;
   vid.currentTime = imgs[index];
   imgs.slice(index+1, index+10).forEach((img) =>{
-    console.log('loading: ', img)
     const tempImg = new Image();
     tempImg.src = `${im_path}${img}.png`
-    tempImg.onload = () => console.log('loaded: ', `${im_path}${img}.png`);
   });
   // vid.oncanplay = () => { vid.currentTime = imgs[index]}
-  console.log(vid.currentTime);
+  // console.log("video Time:", vid.currentTime);
   // const currentTimes = geojsonPoint.features[0].properties.coordTimes.slice(0, index);
   const center = geojsonPoint.features[0].geometry.coordinates[index];
   const centerX = center[0];
@@ -166,13 +160,6 @@ chapters.forEach((record, idx) => {
     chapter.appendChild(title);
   }
 
-  // if (record.video) {
-  //   const vid = document.createElement('video');
-  //   vid.src = 'vids/slide-0.mp4';
-  //   vid.className = 'righty';
-  //   container.appendChild(vid);
-  // }
-
   if (record.image) {
     const image = new Image();
     image.src = record.image;
@@ -215,10 +202,6 @@ if (footer.innerText.length > 0) {
 // instantiate the scrollama
 const scroller = scrollama();
 
-// const normalizeProgress = (stepProgress, driveSlides, routelen) => {
-
-// };
-
 function handleStepProgress(response) {
   vid.style.opacity = 0
   vid.pause()
@@ -230,41 +213,15 @@ function handleStepProgress(response) {
       map.setLayoutProperty('animatedLine', 'visibility', 'visible');
     }
     stepProgress = Math.round(routelen * ((response.progress / config.driveSlides) + (driveSlideNum / config.driveSlides)));
-    // } else {
-    //   stepProgress = Math.round(response.progress * 100 + driveSlideNum * 100);
-    // }
+    console.log("stepProgress", stepProgress)
     changeCenter(stepProgress);
 
-    // console.log(`${stepProgress}/${routelen}`);
   }
 }
 
 map.on('load', () => {
   const w = window.innerWidth;
   const initBounds = routeData.features[0].geometry.coordinates;
-
-  // eslint-disable-next-line max-len
-  // const bounds = initBounds.reduce((bounds, coord) => bounds.extend(coord), new mapboxgl.LngLatBounds(initBounds[0], initBounds[0]));
-
-  // if (w >= 500) {
-  //   map.fitBounds(bounds, {
-  //     padding: {
-  //       top: 150, bottom: 150, right: -100, left: 200,
-  //     },
-  //     duration: 0,
-  //   });
-  // } else {
-  //   map.fitBounds(bounds, {
-  //     padding: 20,
-  //     duration: 0,
-  //   });
-  // }
-  // }
-  //  else {
-  //   map.setZoom(followZoomLevel);
-  //   map.setBearing(followBearing);
-  //   map.setPitch(followPitch);
-  // }
 
   map.addSource('lineSource', {
     type: 'geojson',
@@ -317,14 +274,12 @@ map.on('load', () => {
       if ('location' in chapter) {
         map.flyTo(chapter.location);
       }
-      // if ('video' in chapter) {
-      //   response.element.getElementsByClassName('righty')[0].classList.add('sticky');
-      // }
-      // if (config.showMarkers) {
-      //   marker.setLngLat(chapter.location.center);
-      // }
       if ('onChapterEnter' in chapter) {
         chapter.onChapterEnter.forEach(setLayerOpacity);
+      }
+      if ('videoSeconds' in chapter){
+        changeCenter(chapter.videoSeconds)
+        console.log("chapterProgress:", chapter.videoSeconds)
       }
     })
     .onStepExit((response) => {
@@ -333,9 +288,7 @@ map.on('load', () => {
       if ('onChapterExit' in chapter) {
         chapter.onChapterExit.forEach(setLayerOpacity);
       }
-      // if ('video' in chapter) {
-      //   console.log(response.element.getElementsByClassName('righty')[0].classList.remove('sticky'));
-      // }
+
     })
     .onStepProgress(handleStepProgress);
   createLine();
