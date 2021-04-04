@@ -64,7 +64,6 @@ const createLine = () => {
 const changeCenter = (index) => {
   // Set center to a subsample of the line, say every 10th or 25th
   const currentJson = geojsonPoint.features[0].geometry.coordinates.slice(0, index);
-  // console.log(imgs[index])
   viewerImg.src = `${im_path}${imgs[index]}.png`;
   vid.currentTime = imgs[index];
   imgs.slice(index+1, index+10).forEach((img) =>{
@@ -72,8 +71,6 @@ const changeCenter = (index) => {
     tempImg.src = `${im_path}${img}.png`
   });
   // vid.oncanplay = () => { vid.currentTime = imgs[index]}
-  // console.log("video Time:", vid.currentTime);
-  // const currentTimes = geojsonPoint.features[0].properties.coordTimes.slice(0, index);
   const center = geojsonPoint.features[0].geometry.coordinates[index];
   const centerX = center[0];
   const centerY = center[1];
@@ -206,14 +203,33 @@ function handleStepProgress(response) {
   vid.style.opacity = 0
   vid.pause()
   let stepProgress;
+  let curSlideStart;
+  let nextSlideStart;
+
   if (response.element.id.slice(0, 5) === 'drive') {
+
     const driveSlideNum = parseInt(response.element.id.slice(-1), 10);
+
     if (driveSlideNum === 0) {
       viewerImg.style.display = "block"
       map.setLayoutProperty('animatedLine', 'visibility', 'visible');
     }
-    stepProgress = Math.round(routelen * ((response.progress / config.driveSlides) + (driveSlideNum / config.driveSlides)));
+
+    if (response.index){
+      curSlideStart = parseInt(chapters[response.index].videoSeconds)
+
+      if (chapters[response.index+1]){
+        nextSlideStart = parseInt(chapters[response.index+1].videoSeconds)
+      } else{
+        nextSlideStart = routelen
+      }
+    }
+    console.log("Cur to Next:", curSlideStart, nextSlideStart)
+
+    // stepProgress = Math.round(routelen * ((response.progress / config.driveSlides) + (driveSlideNum / config.driveSlides)));
+    stepProgress = (Math.round((nextSlideStart-curSlideStart)*response.progress))+curSlideStart
     console.log("stepProgress", stepProgress)
+    console.log("responseProgresss", response.progress)
     changeCenter(stepProgress);
 
   }
