@@ -6,7 +6,7 @@ import routeData from './route.json';
 
 let viewerImg = document.getElementById('viewerImg');
 let vid = document.getElementById('vid');
-vid.src = './resized_IMG_4965.mp4';
+vid.src = './mike-video.mp4';
 console.log(vid);
 vid.onplaying = () => { vid.style.opacity = 100 };
 vid.onpause = () => { vid.style.opacity = 0 };
