@@ -26,7 +26,7 @@ https://parceljs.org/getting_started.html
 
 ### Step 1: prepare the scrollytelling presentation content
 
-1a Create Copy JSON
+1a. Create Copy JSON
 * Create Google Doc by making a copy of [this document](https://docs.google.com/document/d/1RyXl-0C_0-Ko-Gklx1Jd1q7MA6vVFiRPJJkmsPJ4PHo/edit) and updating the text and parameters. Follow the exact formats. Refer to the [storytelling documentation](https://github.com/mapbox/storytelling).
 
 1b. optionally, create your own visuals to further the storytelling (recommended)
