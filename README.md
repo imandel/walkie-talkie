@@ -15,34 +15,45 @@ https://parceljs.org/getting_started.html
 
 ## Making a Walkie Talkie
 
-### To build your own walkie talkie, content-wise you will need:
-* an interview video (mp4), used in step 2
-* GPS route recording (gpx), used in step 3
-* written description blocks to present (google doc), used in step 1
-* some map layers to focus and discuss upon (if needed), used in step 1, e.g. [.onChapterEnter] layer: park-slope opacity: 1
+#### To build your own walkie talkie, content-wise you will need:
+* an interview video (mp4)
+* GPS route recording (gpx)
+* written description blocks to present (google doc)
+* (Optional, recommended) An Mapbox account, and some map layers to furhter the storytelling
 
 
-### Steps
+## Steps
 
-1. Create Copy JSON (Slide Show Presentation Content)
-* Create Google Doc by making a copy of [this document](https://docs.google.com/document/d/1RyXl-0C_0-Ko-Gklx1Jd1q7MA6vVFiRPJJkmsPJ4PHo/edit) and updating the text and parameters
-* Make sure that the configs in the document are correct
+### Step 1: prepare the scrollytelling presentation content
+
+1a Create Copy JSON
+* Create Google Doc by making a copy of [this document](https://docs.google.com/document/d/1RyXl-0C_0-Ko-Gklx1Jd1q7MA6vVFiRPJJkmsPJ4PHo/edit) and updating the text and parameters. Follow the exact formats. Refer to the [storytelling documentation](https://github.com/mapbox/storytelling).
+
+1b. optionally, create your own visuals to further the storytelling (recommended)
+* Use [map position helper](https://demos.mapbox.com/location-helper/) to generate location visualizing parameters, e.g. location.center (lon and lat).
+* Follow guidance to create your own "style" on Mapbox on either given data, your created data, or your uploaded data (dataset or tileset), e.g. [.onChapterEnter] layer: park-slope opacity: 1
+
+1c. Prepare config and execute
+* Make sure that the configs (config.js) in the document are correct. Also make sure you copy the changed const config variable to the end of the Google Doc.
 * Fill in `id` and `filepath` parameters in `doc.json`(id: the Google Doc document ID between "d/" and "/edit" in the link, filepath: path for your destination copy content; and make sure the doc is shared publicly)
 * Run `npm run doc` to execute `fetch-doc.js` which will pull Google Doc content into your copy filepath
 
-2. Prepare Video Content
+### Step 2: generate driving routes and interview video screenshots along the drive
+2a. Prepare Video Content
 * Add .mp4 video file to `data/` and `dist/` folders (note: only mp4 will work. If you have another format, use ffmpeg to convert)
 * Make sure image file path is correct
 
-3. Prepare GPS Route Content
+2b. Prepare GPS Route Content
+* Make GPX file using Open GPX Tracker ([Apple](https://apps.apple.com/app/open-gpx-tracker/id984503772), [Android](https://play.google.com/store/apps/details?id=net.osmtracker))
 * Add GPX file to `data/` folder
 
-4. Create Image Flipbook Content and Routes JSON
+2c. Create Image Flipbook Content and Routes JSON
 * After video and GPs data are ready, run `node make-clips.js`
 * This will create `routes.json` for the walking point/line and image clips in the `imgs` folder for the flipbook
 
-5. Update path names in `index.js`
+### Step 3: Final checks and run
+3a. Update path names in `index.js`
 * Make sure that the copy path (ex. import { chapters, config } from `copy.json`) and video path (ex. vid.src = `./IMG_1234.mp4`) match your data
 
-6. Run project `npm run dev`
+3b. Run project `npm run dev`
 

@@ -3,7 +3,9 @@ const out = './static';
 const fs = require('fs');
 const tj = require('@tmcw/togeojson');
 const { DOMParser } = require('xmldom');
+const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
 const ffmpeg = require('fluent-ffmpeg');
+ffmpeg.setFfmpegPath(ffmpegPath);
 const { URL } = require('url');
 
 const { config: { offset, duration }, chapters } = JSON.parse(fs.readFileSync('./copy.json', 'utf-8'));
@@ -73,9 +75,9 @@ const chunkArray = (array, size) => {
 
 if (!fs.existsSync(`${out}/imgs/`)) {
   fs.mkdirSync(`${out}/imgs/`);
-  console.log('making screenshots, this may take a moment');
-  chunkArray(gps.features[0].properties.coordTimes, 50).forEach((chunk) => {
-    console.log(chunk);
-    makeImgs(chunk, `${out}/imgs/`);
-  });
 }
+console.log('making screenshots, this may take a moment');
+chunkArray(gps.features[0].properties.coordTimes, 50).forEach((chunk) => {
+  console.log(chunk);
+  makeImgs(chunk, `${out}/imgs/`);
+});
