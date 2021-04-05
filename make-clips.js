@@ -1,16 +1,22 @@
-const directory = './data';
-const out = './static';
 const fs = require('fs');
 const tj = require('@tmcw/togeojson');
 const { DOMParser } = require('xmldom');
 const ffmpeg = require('fluent-ffmpeg');
 const { URL } = require('url');
 
-const { config: { offset, duration }, chapters } = JSON.parse(fs.readFileSync('./copy.json', 'utf-8'));
+// set data paths
 const CWD = process.cwd();
+const CONFIG_PATH = `${CWD}/doc.json`;
+const CONFIG = JSON.parse(fs.readFileSync(CONFIG_PATH, 'utf-8'));
+const copy_path = `${CWD}/${CONFIG.google.doc[0].filepath}`
+const directory = './data/';
+const out = './static/';
+
+const { config: { offset, duration }, chapters } = JSON.parse(fs.readFileSync(`${copy_path}`, 'utf-8'));
 
 let video;
 let gps;
+
 
 const cutVid = (start, clipDuration, outFile) => {
   ffmpeg(video)
@@ -52,16 +58,14 @@ fs.readdirSync(directory).forEach((file) => {
   }
 });
 
+
 chapters.forEach((chapter) => {
   if (chapter.video) {
     cutVid(chapter.video.start, chapter.video.duration, `./static/vids/${chapter.id}.mp4`);
   }
-  // if(chapter.image) {
-  //   if
-  // }
+
 });
 
-// download img urls?
 const chunkArray = (array, size) => {
   const result = [];
   const arrayCopy = [...array];
